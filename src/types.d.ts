@@ -13,14 +13,6 @@ export interface SlashCommand {
     execute: (interaction: ChatInputCommandInteraction) => void;
     autocomplete?: (interaction: AutocompleteInteraction) => void;
     modal?: (interaction: ModalSubmitInteraction<CacheType>) => void;
-    cooldown?: number; // in seconds
-}
-
-export interface Command {
-    name: string;
-    execute: (message: Message, args: Array<string>) => void;
-    permissions: Array<PermissionResolvable>;
-    aliases: Array<string>;
     cooldown?: number;
 }
 
