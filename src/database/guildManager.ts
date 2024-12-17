@@ -2,12 +2,12 @@ import DatabaseManager from "./dbManager";
 
 export default class GuildManager extends DatabaseManager {
     private sql: string = `
-    CREATE TABLE IF NOT EXISTS guilds (
-        guildId BIGINT PRIMARY KEY,
-        color TEXT DEFAULT "#ff8e4d",
-        emoji TEXT DEFAULT "🎊"
-    )
-  `;
+        CREATE TABLE IF NOT EXISTS guilds (
+            guildId BIGINT PRIMARY KEY,
+            color TEXT DEFAULT "#ff8e4d",
+            emoji TEXT DEFAULT "🎊"
+        )
+    `;
 
     constructor() {
         super();
