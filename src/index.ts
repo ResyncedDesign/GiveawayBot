@@ -1,9 +1,5 @@
-import {
-    Client,
-    GatewayIntentBits,
-    Collection,
-    PermissionFlagsBits,
-} from "discord.js";
+import { Client, GatewayIntentBits, Collection } from "discord.js";
+
 const { Guilds, MessageContent, GuildMessages, GuildMembers } =
     GatewayIntentBits;
 const client = new Client({
@@ -13,6 +9,7 @@ import { Command, SlashCommand } from "./types";
 import { config } from "dotenv";
 import { readdirSync } from "fs";
 import { join } from "path";
+
 config();
 
 client.slashCommands = new Collection<string, SlashCommand>();
