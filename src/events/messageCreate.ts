@@ -1,11 +1,9 @@
 import { ChannelType, Message } from "discord.js";
 import {
     checkPermissions,
-    getGuildOption,
     sendTimedMessage,
 } from "../functions";
 import { BotEvent } from "../types";
-import mongoose from "mongoose";
 
 const event: BotEvent = {
     name: "messageCreate",
@@ -13,10 +11,6 @@ const event: BotEvent = {
         if (!message.member || message.member.user.bot) return;
         if (!message.guild) return;
         let prefix = process.env.PREFIX;
-        if (mongoose.connection.readyState === 1) {
-            let guildPrefix = await getGuildOption(message.guild, "prefix");
-            if (guildPrefix) prefix = guildPrefix;
-        }
 
         if (!message.content.startsWith(prefix)) return;
         if (message.channel.type !== ChannelType.GuildText) return;

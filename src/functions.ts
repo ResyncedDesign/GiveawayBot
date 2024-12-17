@@ -6,8 +6,6 @@ import {
     PermissionResolvable,
     TextChannel,
 } from "discord.js";
-import GuildDB from "./schemas/Guild";
-import { GuildOption } from "./types";
 
 type colorType = "text" | "variable" | "error";
 
