@@ -4,12 +4,10 @@ import {
     GuildMember,
     PermissionFlagsBits,
     PermissionResolvable,
-    PermissionsBitField,
     TextChannel,
 } from "discord.js";
 import GuildDB from "./schemas/Guild";
 import { GuildOption } from "./types";
-import mongoose from "mongoose";
 
 type colorType = "text" | "variable" | "error";
 
@@ -60,25 +58,4 @@ export const sendTimedMessage = (
             )
         );
     return;
-};
-
-export const getGuildOption = async (guild: Guild, option: GuildOption) => {
-    if (mongoose.connection.readyState === 0)
-        throw new Error("Database not connected.");
-    let foundGuild = await GuildDB.findOne({ guildID: guild.id });
-    if (!foundGuild) return null;
-    return foundGuild.options[option];
-};
-
-export const setGuildOption = async (
-    guild: Guild,
-    option: GuildOption,
-    value: any
-) => {
-    if (mongoose.connection.readyState === 0)
-        throw new Error("Database not connected.");
-    let foundGuild = await GuildDB.findOne({ guildID: guild.id });
-    if (!foundGuild) return null;
-    foundGuild.options[option] = value;
-    foundGuild.save();
 };
