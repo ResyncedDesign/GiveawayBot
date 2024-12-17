@@ -5,6 +5,7 @@ export default class GuildManager extends DatabaseManager {
         CREATE TABLE IF NOT EXISTS guilds (
             guildId BIGINT PRIMARY KEY,
             color TEXT DEFAULT "#ff8e4d",
+            everyonePing BOOLEAN DEFAULT 0,
             emoji TEXT DEFAULT "🎊"
         )
     `;
