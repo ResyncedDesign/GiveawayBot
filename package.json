@@ -11,8 +11,9 @@
   "license": "GNU",
   "dependencies": {
     "@types/node": "^18.7.14",
+    "better-sqlite3": "^11.7.0",
     "chalk": "^4.1.2",
-    "discord.js": "latest",
+    "discord.js": "14.16.3",
     "dotenv": "^16.0.2"
   },
   "devDependencies": {
