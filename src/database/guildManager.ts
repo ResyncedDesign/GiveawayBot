@@ -1,3 +1,4 @@
+import { ColorResolvable } from "discord.js";
 import DatabaseManager from "./dbManager";
 
 export default class GuildManager extends DatabaseManager {
@@ -65,7 +66,7 @@ export default class GuildManager extends DatabaseManager {
      * @param guildId ID of the guild.
      * @returns Color as a string.
      */
-    public fetchColor(guildId: string): string {
+    public fetchColor(guildId: string): ColorResolvable {
         const query = `SELECT color FROM guilds WHERE guildId = ?`;
         const result = this.getOne(query, [guildId]);
 
