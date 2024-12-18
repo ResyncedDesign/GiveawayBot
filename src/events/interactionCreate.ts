@@ -1,5 +1,6 @@
 import { Interaction } from "discord.js";
 import { BotEvent } from "../types";
+import GiveawayManager from "../database/gwManager";
 
 const event: BotEvent = {
     name: "interactionCreate",
@@ -70,6 +71,20 @@ const event: BotEvent = {
             } catch (error) {
                 console.error(error);
             }
+        } else if (interaction.isButton()) {
+            const [_, messageId] = interaction.customId.split("_");
+            const gw = new GiveawayManager()
+            const giveaway = gw.fetchGiveaway(messageId);
+            if (!giveaway) return;
+            if (gw.addEntry(giveaway.id!, interaction.user.id)) {
+                interaction.reply("You have entered the giveaway!");
+            }
+            else {
+                interaction.reply("You have already entered the giveaway!");
+            }
+            // TODO: Make this code actually better
+            // TODO: Increment Button Counter
+
         }
     },
 };

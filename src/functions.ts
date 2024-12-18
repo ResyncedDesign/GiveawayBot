@@ -80,20 +80,21 @@ export function parseDuration(duration: string): number {
     }
 }
 
-
 const giveawayManager = new GiveawayManager();
 
 export async function processGiveaways(client: Client): Promise<void> {
     const endedGiveawayIds = giveawayManager.checkEnding();
 
     for (const giveawayId of endedGiveawayIds) {
-        const giveaway = giveawayManager.fetchGiveaway(giveawayId)
+        const giveaway = giveawayManager.fetchGiveaway(giveawayId);
 
         if (!giveaway) continue;
 
         const winners = giveawayManager.pickWinners(giveaway);
 
-        const channel = client.channels.cache.get(giveaway.channelId) as TextChannel;
+        const channel = client.channels.cache.get(
+            giveaway.channelId
+        ) as TextChannel;
         if (channel && channel.isTextBased()) {
             const winnersText =
                 winners.length > 0

@@ -100,10 +100,16 @@ export default class GiveawayManager extends DatabaseManager {
      */
     public fetchGiveaway(gId: string): Giveaway {
         const query = `
-      SELECT entries FROM giveaways
+      SELECT * FROM giveaways
       WHERE id = ?
     `;
         const result = this.getOne(query, [gId]);
+        if (!result) {
+            const sql2 = `
+            SELECT * FROM giveaways WHERE messageId = ?`;
+            const result2 = this.getOne(sql2, [gId]);
+            return result2 as Giveaway;
+        }
         return result as Giveaway;
     }
 
@@ -152,7 +158,7 @@ export default class GiveawayManager extends DatabaseManager {
      * @param giveawayId ID of the giveaway.
      * @param userId ID of the user entering the giveaway.
      */
-    public addEntry(giveawayId: number, userId: string): void {
+    public addEntry(giveawayId: number, userId: string): boolean {
         const query = `
       SELECT entries FROM giveaways
       WHERE id = ?
@@ -160,12 +166,12 @@ export default class GiveawayManager extends DatabaseManager {
         const result = this.getOne(query, [giveawayId]);
 
         if (!result) {
-            return;
+            return false;
         }
 
         const entries = JSON.parse(result.entries) as string[];
         if (entries.includes(userId)) {
-            return;
+            return false;
         }
 
         entries.push(userId);
@@ -175,5 +181,6 @@ export default class GiveawayManager extends DatabaseManager {
       WHERE id = ?
     `;
         this.runQuery(updateQuery, [JSON.stringify(entries), giveawayId]);
+        return true;
     }
 }
