@@ -7,7 +7,7 @@ const guild = new GuildManager();
 const command: SlashCommand = {
     command: new SlashCommandBuilder()
         .setName("gconfig")
-        .setDescription("Edit the guild config")
+        .setDescription("Edit/View the guild config")
         .addBooleanOption((option) =>
             option.setName("everyone").setDescription("Toggle everyone ping")
         )
@@ -27,7 +27,17 @@ const command: SlashCommand = {
         const everyone = interaction.options.getBoolean("everyone");
 
         if (!color && !emoji && !everyone) {
-            return interaction.reply("No options provided");
+            return interaction.reply({
+                content: `Guild config:\n**Color:** ${guild.fetchColor(
+                    interaction.guildId!
+                )}\n**Emoji:** ${guild.fetchEmoji(
+                    interaction.guildId!
+                )}\n**Ping Everyone:** ${
+                    guild.fetchEveryonePing(interaction.guildId!) == true
+                        ? "yes"
+                        : "no"
+                }`,
+            });
         }
 
         if (color) {
