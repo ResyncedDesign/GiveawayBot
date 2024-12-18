@@ -96,9 +96,9 @@ export default class GuildManager extends DatabaseManager {
      * Toggles the ping for everyone in a specific guild.
      * @param guildId ID of the guild.
      */
-    public toggleEveryonePing(guildId: string): void {
-        const query = `UPDATE guilds SET everyonePing = NOT everyonePing WHERE guildId = ?`;
-        this.runQuery(query, [guildId]);
+    public updatePing(guildId: string, newPing: boolean): void {
+        const query = `UPDATE guilds SET everyonePing = ? WHERE guildId = ?`;
+        this.runQuery(query, [newPing ? "1" : "0", guildId]);
     }
 
     /**

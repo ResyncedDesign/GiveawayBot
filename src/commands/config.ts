@@ -1,14 +1,51 @@
-import {
-    SlashCommandBuilder,
-} from "discord.js";
+import { SlashCommandBuilder } from "discord.js";
 import { SlashCommand } from "../types";
+import GuildManager from "../database/guildManager";
+
+const guild = new GuildManager();
 
 const command: SlashCommand = {
     command: new SlashCommandBuilder()
         .setName("gconfig")
-        .setDescription("Edit the guild config"),
+        .setDescription("Edit the guild config")
+        .addBooleanOption((option) =>
+            option.setName("everyone").setDescription("Toggle everyone ping")
+        )
+        .addStringOption((option) =>
+            option
+                .setName("color")
+                .setDescription("Set the color of the guild eg. #ff0000")
+        )
+        .addStringOption((option) =>
+            option
+                .setName("emoji")
+                .setDescription("Set the emoji of the guild eg. 🎊")
+        ),
     execute: (interaction) => {
-        interaction.reply("Hello world");
+        const color = interaction.options.getString("color");
+        const emoji = interaction.options.getString("emoji");
+        const everyone = interaction.options.getBoolean("everyone");
+
+        if (!color && !emoji && !everyone) {
+            return interaction.reply("No options provided");
+        }
+
+        if (color) {
+            if (!/^#[0-9A-F]{6}$/i.test(color)) {
+                return interaction.reply("Invalid color code");
+            }
+            guild.updateColor(interaction.guildId!, color);
+        }
+
+        if (emoji) {
+            guild.updateEmoji(interaction.guildId!, emoji);
+        }
+
+        if (everyone) {
+            guild.updatePing(interaction.guildId!, everyone);
+        }
+
+        interaction.reply("Guild config updated");
     },
 };
 
