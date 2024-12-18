@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
 import { SlashCommand } from "../types";
 import GuildManager from "../database/guildManager";
 
@@ -27,8 +27,11 @@ const command: SlashCommand = {
         const everyone = interaction.options.getBoolean("everyone");
 
         if (!color && !emoji && !everyone) {
+            const embed = new EmbedBuilder()
+                .setColor(guild.fetchColor(interaction.guildId!))
+                .setDescription(`Example embed color`);
             return interaction.reply({
-                content: `Guild config:\n**Color:** ${guild.fetchColor(
+                content: `## Guild config:\n**Color:** ${guild.fetchColor(
                     interaction.guildId!
                 )}\n**Emoji:** ${guild.fetchEmoji(
                     interaction.guildId!
@@ -37,6 +40,7 @@ const command: SlashCommand = {
                         ? "yes"
                         : "no"
                 }`,
+                embeds: [embed],
             });
         }
 
