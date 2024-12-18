@@ -94,6 +94,20 @@ export default class GiveawayManager extends DatabaseManager {
     }
 
     /**
+     * Fetch giveaway from ID.
+     * @param giveawayId ID of the giveaway to fetch
+     * @returns Giveaway
+     */
+    public fetchGiveaway(gId: string): Giveaway {
+        const query = `
+      SELECT entries FROM giveaways
+      WHERE id = ?
+    `;
+        const result = this.getOne(query, [gId]);
+        return result as Giveaway;
+    }
+
+    /**
      * Checks for giveaways that should end based on their duration and createdAt timestamp.
      * Ends giveaways that have surpassed their duration.
      */

@@ -1,11 +1,12 @@
 import chalk from "chalk";
 import {
-    Guild,
+    Client,
     GuildMember,
     PermissionFlagsBits,
     PermissionResolvable,
     TextChannel,
 } from "discord.js";
+import GiveawayManager from "./database/gwManager";
 
 type colorType = "text" | "variable" | "error";
 
@@ -76,5 +77,34 @@ export function parseDuration(duration: string): number {
             return value * 60 * 60 * 24;
         default:
             throw new Error("Invalid duration unit");
+    }
+}
+
+
+const giveawayManager = new GiveawayManager();
+
+export async function processGiveaways(client: Client): Promise<void> {
+    const endedGiveawayIds = giveawayManager.checkEnding();
+
+    for (const giveawayId of endedGiveawayIds) {
+        const giveaway = giveawayManager.fetchGiveaway(giveawayId)
+
+        if (!giveaway) continue;
+
+        const winners = giveawayManager.pickWinners(giveaway);
+
+        const channel = client.channels.cache.get(giveaway.channelId) as TextChannel;
+        if (channel && channel.isTextBased()) {
+            const winnersText =
+                winners.length > 0
+                    ? winners.map((winnerId) => `<@${winnerId}>`).join(", ")
+                    : "No valid entries, no winners could be chosen.";
+
+            await channel.send({
+                content: `🎉 **Giveaway Ended!** 🎉\n**Prize:** ${giveaway.prize}\n**Winners:** ${winnersText}\nHosted by: <@${giveaway.hostId}>`,
+            });
+        }
+
+        giveawayManager.endGiveaway(parseInt(giveawayId));
     }
 }
