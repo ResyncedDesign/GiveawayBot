@@ -3,3 +3,6 @@ build
 .env
 .vscode
 package-lock.json
+src/database/data/database.db
+src/database/data/database.db-shm
+src/database/data/database.db-wal

@@ -3,6 +3,7 @@ import {
 } from "discord.js";
 import { SlashCommand } from "../types";
 import GuildManager from "../database/guildManager";
+
 const guild = new GuildManager()
 
 const command: SlashCommand = {
@@ -10,7 +11,7 @@ const command: SlashCommand = {
         .setName("test")
         .setDescription("Edit the guild config"),
     execute: (interaction) => {
-        interaction.reply("Hello world");
+        console.dir(guild.fetchColor(interaction.guildId!))
     },
 };
 
