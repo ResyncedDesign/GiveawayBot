@@ -105,7 +105,9 @@ const event: BotEvent = {
                     button
                 );
 
-                await message.edit({ components: [row] });
+                const embed = message.embeds[0];
+
+                await message.edit({ components: [row], embeds: [embed] });
                 interaction.reply({
                     content: "You have entered the giveaway!",
                     ephemeral: true,
