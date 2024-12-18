@@ -8,7 +8,7 @@ import { SlashCommand } from "../types";
 module.exports = (client: Client) => {
     const slashCommands: SlashCommandOptionsOnlyBuilder[] = [];
 
-    let slashCommandsDir = join(__dirname, "../slashCommands");
+    let slashCommandsDir = join(__dirname, "../commands");
 
     readdirSync(slashCommandsDir).forEach((file) => {
         if (!file.endsWith(".js")) return;
