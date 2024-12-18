@@ -87,7 +87,11 @@ const command: SlashCommand = {
                     embeds: [embed],
                     content: `${guild.fetchEmoji(
                         interaction.guildId!
-                    )} **GIVEAWAY** ${guild.fetchEmoji(interaction.guildId!)}`,
+                    )} **GIVEAWAY** ${guild.fetchEmoji(interaction.guildId!)} ${
+                        guild.fetchEveryonePing(interaction.guildId!)
+                            ? "\n||@everyone||"
+                            : ""
+                    }`,
                 });
 
                 const button = new ButtonBuilder()
@@ -127,7 +131,11 @@ const command: SlashCommand = {
                     embeds: [embed],
                     content: `${guild.fetchEmoji(
                         interaction.guildId!
-                    )} **GIVEAWAY** ${guild.fetchEmoji(interaction.guildId!)}`,
+                    )} **GIVEAWAY** ${guild.fetchEmoji(interaction.guildId!)} ${
+                        guild.fetchEveryonePing(interaction.guildId!)
+                            ? "\n||@everyone||"
+                            : ""
+                    }`,
                 });
 
                 const button = new ButtonBuilder()
