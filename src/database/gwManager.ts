@@ -41,7 +41,6 @@ export default class GiveawayManager extends DatabaseManager {
      */
     private setup(): void {
         this.runQuery(this.sql);
-        console.log("Giveaways table initialized.");
     }
 
     /**
@@ -79,7 +78,6 @@ export default class GiveawayManager extends DatabaseManager {
       WHERE id = ?
     `;
         this.runQuery(query, [giveawayId]);
-        console.log(`Giveaway ${giveawayId} has ended.`);
     }
 
     /**
@@ -123,7 +121,6 @@ export default class GiveawayManager extends DatabaseManager {
         const winners: string[] = [];
 
         if (entries.length === 0) {
-            console.log(`No entries found for giveaway ${giveaway.id}.`);
             return [];
         }
 
@@ -149,7 +146,6 @@ export default class GiveawayManager extends DatabaseManager {
         const result = this.getOne(query, [giveawayId]);
 
         if (!result) {
-            console.log(`Giveaway ${giveawayId} not found.`);
             return;
         }
 
