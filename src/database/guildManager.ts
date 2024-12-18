@@ -91,4 +91,29 @@ export default class GuildManager extends DatabaseManager {
             return "🎊";
         }
     }
+
+    /**
+     * Toggles the ping for everyone in a specific guild.
+     * @param guildId ID of the guild.
+     */
+    public toggleEveryonePing(guildId: string): void {
+        const query = `UPDATE guilds SET everyonePing = NOT everyonePing WHERE guildId = ?`;
+        this.runQuery(query, [guildId]);
+    }
+
+    /**
+     * Fetches the ping for everyone in a specific guild.
+     * @param guildId ID of the guild.
+     * @returns Boolean indicating if everyone should be pinged.
+     */
+    public fetchEveryonePing(guildId: string): boolean {
+        const query = `SELECT everyonePing FROM guilds WHERE guildId = ?`;
+        const result = this.getOne(query, [guildId]);
+
+        if (result) {
+            return result.everyonePing == 1;
+        } else {
+            return false;
+        }
+    }
 }
