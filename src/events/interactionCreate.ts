@@ -1,10 +1,16 @@
-import { Interaction } from "discord.js";
+import {
+    ActionRowBuilder,
+    ButtonBuilder,
+    Interaction,
+    TextChannel,
+} from "discord.js";
 import { BotEvent } from "../types";
 import GiveawayManager from "../database/gwManager";
+import GuildManager from "../database/guildManager";
 
 const event: BotEvent = {
     name: "interactionCreate",
-    execute: (interaction: Interaction) => {
+    execute: async (interaction: Interaction) => {
         if (interaction.isChatInputCommand()) {
             let command = interaction.client.slashCommands.get(
                 interaction.commandName
@@ -73,18 +79,42 @@ const event: BotEvent = {
             }
         } else if (interaction.isButton()) {
             const [_, messageId] = interaction.customId.split("_");
-            const gw = new GiveawayManager()
+            const gw = new GiveawayManager();
+            const guild = new GuildManager();
             const giveaway = gw.fetchGiveaway(messageId);
             if (!giveaway) return;
             if (gw.addEntry(giveaway.id!, interaction.user.id)) {
-                interaction.reply("You have entered the giveaway!");
-            }
-            else {
-                interaction.reply("You have already entered the giveaway!");
-            }
-            // TODO: Make this code actually better
-            // TODO: Increment Button Counter
+                const channel = interaction.client.channels.cache.get(
+                    giveaway.channelId
+                );
+                if (!channel || !(channel instanceof TextChannel)) return;
 
+                const message = await channel.messages.fetch(
+                    giveaway.messageId
+                );
+                if (!message) return;
+
+                const entries = JSON.parse(giveaway.entries) as string[];
+                const button = new ButtonBuilder()
+                    .setEmoji(guild.fetchEmoji(interaction.guildId!))
+                    .setCustomId(`giveaway_${messageId}`)
+                    .setLabel(`${entries.length + 1}`);
+
+                const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+                    button
+                );
+
+                await message.edit({ components: [row] });
+                interaction.reply({
+                    content: "You have entered the giveaway!",
+                    ephemeral: true,
+                });
+            } else {
+                interaction.reply({
+                    content: "You have already entered the giveaway!",
+                    ephemeral: true,
+                });
+            }
         }
     },
 };
