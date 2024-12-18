@@ -3,6 +3,7 @@ import {
     ButtonBuilder,
     Interaction,
     TextChannel,
+    ButtonStyle,
 } from "discord.js";
 import { BotEvent } from "../types";
 import GiveawayManager from "../database/gwManager";
@@ -98,7 +99,7 @@ const event: BotEvent = {
                 const button = new ButtonBuilder()
                     .setEmoji(guild.fetchEmoji(interaction.guildId!))
                     .setCustomId(`giveaway_${messageId}`)
-                    .setLabel(`${entries.length + 1}`);
+                    .setLabel(`${entries.length + 1}`).setStyle(ButtonStyle.Primary)
 
                 const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
                     button
