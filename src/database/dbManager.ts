@@ -3,7 +3,7 @@ import { Database as BetterSqlite3Database } from "better-sqlite3";
 
 export default class DatabaseManager {
     private db: BetterSqlite3Database;
-    private dbFilePath: string = "./data/database.db";
+    private dbFilePath: string = "./src/database/data/database.db";
     /**
      * Initializes the database connection.
      * @param dbFilePath Path to the SQLite database file.
@@ -11,7 +11,6 @@ export default class DatabaseManager {
     constructor() {
         this.db = new Database(this.dbFilePath);
         this.db.pragma("journal_mode = WAL");
-        console.log(`Connected to database: ${this.dbFilePath}`);
     }
 
     /**
