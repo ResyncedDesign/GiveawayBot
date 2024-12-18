@@ -59,7 +59,10 @@ const command: SlashCommand = {
             guild.updatePing(interaction.guildId!, everyone);
         }
 
-        interaction.reply("Guild config updated");
+        const embed = new EmbedBuilder()
+            .setColor(guild.fetchColor(interaction.guildId!))
+            .setDescription(`Example embed color`);
+        interaction.reply({ content: "Guild config updated", embeds: [embed] });
     },
 };
 
