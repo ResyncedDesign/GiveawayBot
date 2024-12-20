@@ -71,7 +71,7 @@ export default class GiveawayManager extends DatabaseManager {
      * Ends a giveaway by updating its status.
      * @param giveawayId ID of the giveaway to end.
      */
-    public endGiveaway(giveawayId: number): void {
+    public endGiveaway(giveawayId: string): void {
         const query = `
       UPDATE giveaways
       SET status = 0

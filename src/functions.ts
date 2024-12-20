@@ -97,7 +97,7 @@ export async function processGiveaways(client: Client): Promise<void> {
 
         const winners = giveawayManager.pickWinners(giveaway);
 
-        giveawayManager.endGiveaway(parseInt(giveawayId));
+        giveawayManager.endGiveaway(giveawayId);
 
         const channel = client.channels.cache.get(
             giveaway.channelId

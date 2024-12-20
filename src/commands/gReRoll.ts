@@ -26,6 +26,8 @@ const command: SlashCommand = {
             return interaction.reply("This giveaway is not in this guild");
         }
 
+        console.dir(giveaway, { depth: null });
+
         if (giveaway.status === 1) {
             return interaction.reply("This giveaway is not ended yet");
         }
