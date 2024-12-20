@@ -92,6 +92,8 @@ export async function processGiveaways(client: Client): Promise<void> {
 
         const winners = giveawayManager.pickWinners(giveaway);
 
+        giveawayManager.endGiveaway(parseInt(giveawayId));
+
         const channel = client.channels.cache.get(
             giveaway.channelId
         ) as TextChannel;
@@ -106,6 +108,13 @@ export async function processGiveaways(client: Client): Promise<void> {
             });
         }
 
-        giveawayManager.endGiveaway(parseInt(giveawayId));
+        for (const winnerId of winners) {
+            const winner = await client.users.fetch(winnerId);
+            if (winner) {
+                await winner.send(
+                    `🎉 **Congratulations!** 🎉\nYou won the giveaway for **${giveaway.prize}**! [Link](https://discord.com/channels/${channel.guildId}/${channel.id}/${giveaway.messageId})`
+                );
+            }
+        }
     }
 }
