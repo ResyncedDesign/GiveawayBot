@@ -48,7 +48,7 @@ const command: SlashCommand = {
             .join(", ");
 
         await channel.send({
-            content: `New Winners: ${winnersText}`,
+            content: `**New Winner(s)**: ${winnersText}`,
         });
 
         interaction.reply({
