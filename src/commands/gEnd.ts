@@ -16,20 +16,20 @@ const command: SlashCommand = {
         .setDescription("End a giveaway early")
         .addStringOption((option) =>
             option
-                .setName("messageId")
+                .setName("messageid")
                 .setDescription("The message ID of the giveaway")
                 .setRequired(true)
         )
         .addBooleanOption((option) =>
             option
-                .setName("selectWinners")
+                .setName("selectwinners")
                 .setDescription("Whether to select winners or not")
                 .setRequired(false)
         ),
     execute: async (interaction) => {
-        const giveawayId = interaction.options.getString("messageId");
+        const giveawayId = interaction.options.getString("messageid");
         const selectWinners =
-            interaction.options.getBoolean("selectWinners") || false;
+            interaction.options.getBoolean("selectwinners") || false;
 
         const gw = new GiveawayManager();
         const guild = new GuildManager();
@@ -70,9 +70,9 @@ const command: SlashCommand = {
             .setColor(guild.fetchColor(interaction.guildId!))
             .setTitle(giveaway.prize)
             .setDescription(
-                `**Prize:** ${giveaway.prize}\n${
+                `**Prize:** ${giveaway.prize}${
                     selectWinners
-                        ? `**Winners:** ${
+                        ? `\n**Winners:** ${
                               winners.length > 0
                                   ? winners
                                         .map((winnerId) => `<@${winnerId}>`)

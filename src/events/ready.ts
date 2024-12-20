@@ -1,4 +1,4 @@
-import { Client } from "discord.js";
+import { ActivityType, Client } from "discord.js";
 import { BotEvent } from "../types";
 import { color, processGiveaways } from "../functions";
 
@@ -12,6 +12,11 @@ const event: BotEvent = {
                 `🚀 Logged in as ${color("variable", client.user?.tag)}`
             )
         );
+
+        client.user?.setActivity({
+            name: "🎉 Resynced Giveaways",
+            type: ActivityType.Custom,
+        });
 
         setInterval(() => {
             processGiveaways(client);
