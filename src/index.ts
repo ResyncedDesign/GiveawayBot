@@ -9,8 +9,21 @@ import { SlashCommand } from "./types";
 import { config } from "dotenv";
 import { readdirSync } from "fs";
 import { join } from "path";
+import { color } from "./functions";
+import Figlet from "figlet";
 
 config();
+
+console.log(
+    color(
+        "text",
+        Figlet.textSync(`Resynced`, {
+            font: "Doom",
+            width: 60,
+            whitespaceBreak: true,
+        })
+    )
+);
 
 client.slashCommands = new Collection<string, SlashCommand>();
 client.cooldowns = new Collection<string, number>();
