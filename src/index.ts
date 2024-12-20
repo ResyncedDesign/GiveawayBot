@@ -25,6 +25,10 @@ console.log(
     )
 );
 
+console.log(
+    color("text", `❤  With love from ${color("variable", "Resynced Design")}\n`)
+);
+
 client.slashCommands = new Collection<string, SlashCommand>();
 client.cooldowns = new Collection<string, number>();
 
