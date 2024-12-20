@@ -13,6 +13,7 @@ const event: BotEvent = {
     name: "interactionCreate",
     execute: async (interaction: Interaction) => {
         if (interaction.isChatInputCommand()) {
+            if (!interaction.guildId) return;
             let command = interaction.client.slashCommands.get(
                 interaction.commandName
             );
@@ -99,7 +100,8 @@ const event: BotEvent = {
                 const button = new ButtonBuilder()
                     .setEmoji(guild.fetchEmoji(interaction.guildId!))
                     .setCustomId(`giveaway_${messageId}`)
-                    .setLabel(`${entries.length + 1}`).setStyle(ButtonStyle.Primary)
+                    .setLabel(`${entries.length + 1}`)
+                    .setStyle(ButtonStyle.Primary);
 
                 const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
                     button
