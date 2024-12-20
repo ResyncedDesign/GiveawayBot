@@ -50,7 +50,7 @@ const command: SlashCommand = {
 
         if (!prize || !winners || !duration) {
             return interaction.reply({
-                text: "You forgot to fill out some fields",
+                content: "You forgot to fill out some fields",
                 ephemeral: true,
             });
         }
@@ -60,7 +60,7 @@ const command: SlashCommand = {
             parsedDuration = parseDuration(duration);
         } catch (e) {
             return interaction.reply({
-                text: "Invalid duration format. Use formats like `1h`, `30m`, or `2d`.",
+                content: "Invalid duration format. Use formats like `1h`, `30m`, or `2d`.",
                 epheral: true,
             });
         }
@@ -116,12 +116,12 @@ const command: SlashCommand = {
                 });
 
                 return interaction.reply({
-                    text: `Giveaway started in ${channel}`,
+                    content: `Giveaway started in ${channel}`,
                     ephemeral: true,
                 });
             } else {
                 return interaction.reply({
-                    text: "The selected channel is not a text-based channel.",
+                    content: "The selected channel is not a text-based channel.",
                     ephemeral: true,
                 });
             }
@@ -160,7 +160,7 @@ const command: SlashCommand = {
                 });
 
                 return interaction.reply({
-                    text: `Giveaway started in ${interaction.channel}`,
+                    content: `Giveaway started in ${interaction.channel}`,
                     ephemeral: true,
                 });
             }
