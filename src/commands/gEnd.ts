@@ -45,7 +45,7 @@ const command: SlashCommand = {
         }
 
         const winners = gw.pickWinners(giveaway);
-        gw.endGiveaway(giveawayId!);
+        gw.endGiveaway(giveaway.id!.toString());
         const channel = interaction.guild!.channels.cache.get(
             giveaway.channelId
         ) as any;
