@@ -124,7 +124,6 @@ export async function processGiveaways(client: Client): Promise<void> {
 
         const message = await channel.messages.fetch(giveaway.messageId);
         if (message) {
-            const button = message.components[0].components[0];
             const button2 = new ButtonBuilder()
                 .setEmoji(guildManager.fetchEmoji(giveaway.guildId))
                 .setLabel(

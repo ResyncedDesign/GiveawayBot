@@ -13,7 +13,7 @@ const event: BotEvent = {
             )
         );
 
-        setTimeout(() => {
+        setInterval(() => {
             processGiveaways(client);
         }, 1000);
     },
