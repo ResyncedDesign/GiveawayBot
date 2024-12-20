@@ -5,8 +5,13 @@ import {
     PermissionFlagsBits,
     PermissionResolvable,
     TextChannel,
+    EmbedBuilder,
+    ButtonBuilder,
+    ButtonStyle,
+    ActionRowBuilder,
 } from "discord.js";
 import GiveawayManager from "./database/gwManager";
+import GuildManager from "./database/guildManager";
 
 type colorType = "text" | "variable" | "error";
 
@@ -81,7 +86,7 @@ export function parseDuration(duration: string): number {
 }
 
 const giveawayManager = new GiveawayManager();
-
+const guildManager = new GuildManager();
 export async function processGiveaways(client: Client): Promise<void> {
     const endedGiveawayIds = giveawayManager.checkEnding();
 
@@ -115,6 +120,49 @@ export async function processGiveaways(client: Client): Promise<void> {
                     `🎉 **Congratulations!** 🎉\nYou won the giveaway for **${giveaway.prize}**! [Link](https://discord.com/channels/${channel.guildId}/${channel.id}/${giveaway.messageId})`
                 );
             }
+        }
+
+        const message = await channel.messages.fetch(giveaway.messageId);
+        if (message) {
+            const button = message.components[0].components[0];
+            const button2 = new ButtonBuilder()
+                .setEmoji(guildManager.fetchEmoji(giveaway.guildId))
+                .setLabel(
+                    JSON.parse(giveaway.entries || "[]").length.toString()
+                )
+                .setStyle(ButtonStyle.Primary)
+                .setDisabled(true)
+                .setCustomId(`gw_${giveaway.messageId}`);
+            const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+                button2
+            );
+
+            const embed = new EmbedBuilder()
+                .setColor(guildManager.fetchColor(giveaway.guildId))
+                .setTitle(giveaway.prize)
+                .setDescription(
+                    `**Prize:** ${giveaway.prize}\n**Winners:** ${
+                        winners.length > 0
+                            ? winners
+                                  .map((winnerId) => `<@${winnerId}>`)
+                                  .join(", ")
+                            : "No valid entries, no winners could be chosen."
+                    }\nHosted by: <@${giveaway.hostId}>`
+                );
+            const content = `${guildManager.fetchEmoji(
+                giveaway.guildId
+            )} **GIVEAWAY ENDED** ${guildManager.fetchEmoji(
+                giveaway.guildId
+            )}\n${
+                guildManager.fetchEveryonePing(giveaway.guildId)
+                    ? "||@everyone||"
+                    : ""
+            }`;
+            await message.edit({
+                content: content,
+                embeds: [embed],
+                components: [row],
+            });
         }
     }
 }
