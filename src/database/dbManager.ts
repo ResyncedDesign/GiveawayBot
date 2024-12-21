@@ -1,16 +1,10 @@
-/**
- * @fileoverview Abstract Database Mananger Class
- * @author Kars1996 (https://kars.bio)
- * @copyright Copyright 2024 Resynced Design
- * @github https://github.com/ResyncedDesign/GiveawayBot
- */
-
 import Database from "better-sqlite3";
 import { Database as BetterSqlite3Database } from "better-sqlite3";
 
 export default class DatabaseManager {
     private db: BetterSqlite3Database;
     private dbFilePath: string = "./src/database/data/database.db";
+
     /**
      * Initializes the database connection.
      * @param dbFilePath Path to the SQLite database file.
@@ -18,6 +12,18 @@ export default class DatabaseManager {
     constructor() {
         this.db = new Database(this.dbFilePath);
         this.db.pragma("journal_mode = WAL");
+    }
+
+    /**
+     * Validates table names and column names to prevent SQL injection.
+     * Only allows alphanumeric characters and underscores.
+     * @param identifier The table or column name to validate.
+     * @returns `true` if the identifier is valid, otherwise throws an error.
+     */
+    private validateIdentifier(identifier: string): void {
+        if (!/^[a-zA-Z0-9_]+$/.test(identifier)) {
+            throw new Error(`Invalid identifier: ${identifier}`);
+        }
     }
 
     /**
@@ -58,6 +64,11 @@ export default class DatabaseManager {
      * @param schema Schema definition for the table (e.g., "id INTEGER PRIMARY KEY, name TEXT").
      */
     protected createTable(tableName: string, schema: string): void {
+        this.validateIdentifier(tableName);
+        if (!/^[a-zA-Z0-9_(),\s]+$/.test(schema)) {
+            throw new Error(`Invalid schema: ${schema}`);
+        }
+
         const query = `CREATE TABLE IF NOT EXISTS ${tableName} (${schema})`;
         this.runQuery(query);
     }
@@ -67,6 +78,8 @@ export default class DatabaseManager {
      * @param tableName Name of the table to drop.
      */
     protected dropTable(tableName: string): void {
+        this.validateIdentifier(tableName);
+
         const query = `DROP TABLE IF EXISTS ${tableName}`;
         this.runQuery(query);
     }
@@ -77,13 +90,17 @@ export default class DatabaseManager {
      * @param data Object containing column-value pairs to insert.
      */
     protected insert(tableName: string, data: Record<string, any>): void {
-        const keys = Object.keys(data).join(", ");
-        const placeholders = Object.keys(data)
-            .map(() => "?")
-            .join(", ");
-        const values = Object.values(data);
+        this.validateIdentifier(tableName);
 
-        const query = `INSERT INTO ${tableName} (${keys}) VALUES (${placeholders})`;
+        const keys = Object.keys(data);
+        keys.forEach((key) => this.validateIdentifier(key));
+
+        const placeholders = keys.map(() => "?").join(", ");
+        const values = Object.values(data);
+        const query = `INSERT INTO ${tableName} (${keys.join(
+            ", "
+        )}) VALUES (${placeholders})`;
+
         this.runQuery(query, values);
     }
 
