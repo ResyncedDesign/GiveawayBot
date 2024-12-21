@@ -34,6 +34,7 @@ const command: SlashCommand = {
                 .setRequired(false)
         ),
     execute: async (interaction) => {
+        interaction.deferReply({ ephemeral: true });
         const giveawayId = interaction.options.getString("messageid");
         const selectWinners =
             interaction.options.getBoolean("selectwinners") || false;
@@ -121,7 +122,9 @@ const command: SlashCommand = {
             }
         }
 
-        interaction.reply("Ended giveaway successfully");
+        interaction.editReply({
+            content: "Ended giveaway successfully",
+        });
     },
 };
 
