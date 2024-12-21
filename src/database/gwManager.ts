@@ -11,7 +11,7 @@ export interface Giveaway {
     messageId: string;
     hostId: string;
     guildId: string;
-    status?: number; // true = active, false = ended
+    status?: number; // 1 = active, 0 = ended
 }
 
 export default class GiveawayManager extends DatabaseManager {
