@@ -17,7 +17,7 @@ config();
 console.log(
     color(
         "text",
-        Figlet.textSync(`Resynced`, {
+        Figlet.textSync(`Giveaways`, {
             font: "Doom",
             width: 60,
             whitespaceBreak: true,
