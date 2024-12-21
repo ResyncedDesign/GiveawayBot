@@ -60,7 +60,8 @@ const command: SlashCommand = {
             parsedDuration = parseDuration(duration);
         } catch (e) {
             return interaction.reply({
-                content: "Invalid duration format. Use formats like `1h`, `30m`, or `2d`.",
+                content:
+                    "Invalid duration format. Use formats like `1h`, `30m`, or `2d`.",
                 epheral: true,
             });
         }
@@ -121,7 +122,8 @@ const command: SlashCommand = {
                 });
             } else {
                 return interaction.reply({
-                    content: "The selected channel is not a text-based channel.",
+                    content:
+                        "The selected channel is not a text-based channel.",
                     ephemeral: true,
                 });
             }
