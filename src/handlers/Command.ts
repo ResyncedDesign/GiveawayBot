@@ -1,3 +1,10 @@
+/**
+ * @fileoverview Command Handler
+ * @author Kars1996 (https://kars.bio)
+ * @copyright Copyright 2024 Resynced Design
+ * @github https://github.com/ResyncedDesign/GiveawayBot
+ */
+
 import { Client, Routes, SlashCommandOptionsOnlyBuilder } from "discord.js";
 import { REST } from "@discordjs/rest";
 import { readdirSync } from "fs";

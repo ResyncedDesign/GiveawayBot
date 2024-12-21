@@ -1,3 +1,10 @@
+/**
+ * @fileoverview Abstract Database Mananger Class
+ * @author Kars1996 (https://kars.bio)
+ * @copyright Copyright 2024 Resynced Design
+ * @github https://github.com/ResyncedDesign/GiveawayBot
+ */
+
 import Database from "better-sqlite3";
 import { Database as BetterSqlite3Database } from "better-sqlite3";
 
