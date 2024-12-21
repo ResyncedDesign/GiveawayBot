@@ -8,7 +8,7 @@
 
 ---
 
-Welcome to the **Open-Source Giveaway Bot Template**! This project is built using **TypeScript** and comes with everything you need to set up a fully functional giveaway bot with SQLite database support and customizable guild configurations. For a more detailed breakdown look at our **[Documentation](https://docs.resynced.design/giveaway-bot/introduction)**
+Welcome to the **Open-Source Giveaway Bot Template**! This project is built using **TypeScript** and comes with everything you need to set up a fully functional giveaway bot with SQLite database support and customizable guild configurations. For a more detailed breakdown look at our **[Documentation.](https://docs.resynced.design/giveaway-bot/introduction)**
 
 ---
 
