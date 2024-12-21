@@ -1,3 +1,10 @@
+/**
+ * @fileoverview Build File
+ * @author Kars1996 (https://kars.bio)
+ * @copyright Copyright 2024 Resynced Design
+ * @github https://github.com/ResyncedDesign/GiveawayBot
+ */
+
 const { exec } = require("child_process");
 const themeColors = {
     text: "#ff8e4d",
