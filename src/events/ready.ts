@@ -28,6 +28,23 @@ const event: BotEvent = {
         setInterval(() => {
             processGiveaways(client);
         }, 1000);
+
+        client.on("error", console.error);
+        client.on("warn", console.warn);
+
+        process.on("unhandledRejection", (reason, promise) => {
+            console.error(
+                "Unhandled Rejection at:",
+                promise,
+                "reason:",
+                reason
+            );
+        });
+
+        process.on("uncaughtException", (error) => {
+            console.error("Uncaught Exception thrown:", error);
+            process.exit(1);
+        });
     },
 };
 
