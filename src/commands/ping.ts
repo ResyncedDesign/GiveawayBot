@@ -5,14 +5,7 @@
  * @github https://github.com/ResyncedDesign/GiveawayBot
  */
 
-import {
-    ButtonBuilder,
-    ButtonStyle,
-    ChannelType,
-    SlashCommandBuilder,
-    EmbedBuilder,
-    ActionRowBuilder,
-} from "discord.js";
+import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
 import { SlashCommand } from "../types";
 import GuildManager from "../database/guildManager";
 
@@ -38,3 +31,5 @@ const command: SlashCommand = {
         });
     },
 };
+
+export default command;
